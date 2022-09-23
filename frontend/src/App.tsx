@@ -1,6 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { PostListPage } from "pages/Post";
 
 function App() {
   return (
@@ -19,6 +21,12 @@ function App() {
           Learn React
         </a>
       </header>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/post" element={<PostListPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
