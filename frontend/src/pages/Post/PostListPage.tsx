@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import Pagination from "components/Pagination";
 
 export default function PostListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,12 +51,11 @@ export default function PostListPage() {
 
       <Footer>
         <div />
-        {/* <Pagination
-          totalPage={Math.ceil(posts.length / limit)}
+        <Pagination
+          totalPage={Math.ceil(dummyPosts.length / limit)}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-        /> */}
-
+        />
         <button className="write_button">글쓰기</button>
       </Footer>
     </Container>
