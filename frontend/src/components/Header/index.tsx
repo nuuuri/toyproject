@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { ReactComponent as menuIcon } from "assets/images/icons8-menu.svg";
+import { LayoutStore } from "components/Layout/store";
 
 export default function Header() {
   return (
     <Container>
-      <MenuIcon />
+      <MenuIcon onClick={() => LayoutStore.toggleIsFullScreen()} />
     </Container>
   );
 }
