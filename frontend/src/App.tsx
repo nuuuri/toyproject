@@ -1,18 +1,15 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { PostListPage } from "pages/Post";
-import Header from "components/Header";
+import Layout from "components/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/post" element={<PostListPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/post" element={<PostListPage />} />
+      </Route>
+    </Routes>
   );
 }
 

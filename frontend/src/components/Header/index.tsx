@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { ReactComponent as menuIcon } from "assets/images/icons8-menu.svg";
 
-export default function Header() {
+export default function Header(props: { toggleIsFullScreen: Function }) {
   return (
     <Container>
-      <MenuIcon />
+      <MenuIcon onClick={() => props.toggleIsFullScreen()} />
     </Container>
   );
 }
