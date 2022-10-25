@@ -1,42 +1,29 @@
 package com.nuuuri.backend.controller;
 
+import com.nuuuri.backend.data.entity.User;
 import com.nuuuri.backend.dto.PostDTO;
 import com.nuuuri.backend.service.PostService;
-import lombok.Data;
+import com.nuuuri.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/post")
+@RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final UserService userService;
 
-    @GetMapping(value = "/{id}")
-    public PostDTO getPost(@PathVariable Long id) {
-        return postService.getPostById(id);
+    @PostMapping()
+    //@ApiOperation(value = "게시글 작성", notes = "게시글을 작성하는 API입니다.")
+    public Long createPost(@RequestBody PostDTO.Request postRequestDTO) {
+        User user = userService.getUser(postRequestDTO.getUserId());
+
+        return postService
+                .createPost(user, postRequestDTO.getTitle(), postRequestDTO.getContent());
     }
-
-    @GetMapping()
-    public List<PostDTO> getAllPost() {
-        return postService.getAllDesc();
-    }
-
-    @PostMapping
-    public void createPost(@RequestBody CreatePostRequest requestData) {
-        try {
-            postService.createPost(requestData.getUserId(), requestData.getTitle(), requestData.getContent());
-        } catch (Exception err) {
-
-        }
-    }
-}
-
-@Data
-class CreatePostRequest {
-    private String userId;
-    private String title;
-    private String content;
 }

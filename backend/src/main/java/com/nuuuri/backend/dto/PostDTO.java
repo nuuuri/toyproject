@@ -1,40 +1,40 @@
 package com.nuuuri.backend.dto;
 
 import com.nuuuri.backend.data.entity.Post;
-import com.nuuuri.backend.data.entity.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@NoArgsConstructor
+import java.time.LocalDateTime;
+
 public class PostDTO {
-    private Long id;
-    private User user;
-    private String title;
-    private String content;
-    private int look;
 
-    @Builder
-    public PostDTO(User user, String title, String content) {
-        this.user = user;
-        this.title = title;
-        this.content = content;
-        this.look = 0;
+    @Data
+    @AllArgsConstructor
+    @ApiModel(value = "postRequestDTO")
+    public static class Request {
+        private String userId;
+        private String title;
+        private String content;
     }
 
-    public PostDTO(Post entity) {
-        this.user = entity.getUser();
-        this.title = entity.getTitle();
-        this.content = entity.getContent();
-        this.look = entity.getLook();
-    }
+    @Data
+    @ApiModel(value = "postResponseDTO")
+    public static class Response {
+        private String userId;
+        private String title;
+        private String content;
+        private int look;
+        private LocalDateTime created;
+        private LocalDateTime modified;
 
-    public Post toEntity() {
-        return Post.builder()
-                .title(title)
-                .content(content)
-                .user(user)
-                .build();
+        public Response(Post entity) {
+            this.userId = entity.getUser().getUserId();
+            this.title = entity.getTitle();
+            this.content = entity.getContent();
+            this.look = entity.getLook();
+            this.created = entity.getCreated();
+            this.modified = entity.getModified();
+        }
     }
 }
