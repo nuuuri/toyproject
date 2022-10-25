@@ -1,8 +1,5 @@
 package com.nuuuri.backend.controller;
 
-import com.nuuuri.backend.dto.PostDTO;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -86,10 +83,12 @@ public class TestController {
     }
     */
 
+    /*
     @PutMapping(value = "/request3")
     public ResponseEntity<PostDTO> pustTest2(@RequestBody PostDTO postDTO) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(postDTO);
     }
+    */
 
     @DeleteMapping(value = "/request1/{id}")
     public String deleteTest1(@PathVariable Long id) {

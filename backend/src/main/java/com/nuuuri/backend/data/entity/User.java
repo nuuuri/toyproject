@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -17,17 +19,17 @@ public class User {
     @Column(name = "user_uuid", unique = true, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 15, nullable = false)
     private String name;
 
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(nullable = false)
+    @Column(length = 20, nullable = false)
     private String password;
 
-    /*@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<String> posts = new ArrayList<>();*/
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String name, String userId, String password) {
@@ -35,6 +37,4 @@ public class User {
         this.userId = userId;
         this.password = password;
     }
-
-
 }

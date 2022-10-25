@@ -2,27 +2,33 @@ package com.nuuuri.backend.service;
 
 import com.nuuuri.backend.data.entity.User;
 import com.nuuuri.backend.data.repository.UserRepository;
-import com.nuuuri.backend.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-@RequiredArgsConstructor // final이 선언된 모든 필드를 인자값으로 하는 생성자를 대신 생성해줌
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
-    @Transactional(readOnly = true)
-    public UserDTO getUser(String userId) {
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+    @Transactional
+    public Long createUser(User user) {
+        return userRepository.save(user).getId();
+    }
 
-        return new UserDTO(user);
+    @Transactional(readOnly = true)
+    public User getUser(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
     }
 
     @Transactional
-    public void createUser(UserDTO userDTO) {
-        userRepository.save(userDTO.toEntity());
+    public void updateUser() {
+
+    }
+
+    @Transactional
+    public void deleteUser(String userId) {
+
     }
 }
