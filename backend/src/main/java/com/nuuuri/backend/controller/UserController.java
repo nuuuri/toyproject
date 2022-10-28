@@ -4,7 +4,11 @@ import com.nuuuri.backend.data.entity.User;
 import com.nuuuri.backend.dto.UserDTO;
 import com.nuuuri.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/user")
@@ -19,10 +23,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/{userId}")
-    public UserDTO.Response getUser(@PathVariable String userId) {
-        User user = userService.getUser(userId);
+    public ResponseEntity getUser(@PathVariable String userId) {
 
-        return new UserDTO.Response(user);
+        try {
+            User user = userService.getUser(userId);
+            return ResponseEntity.ok()
+                    .body(new UserDTO.Response(user));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("유저 정보 조회 실패");
+        }
     }
 
     @PutMapping(value = "/{userId}")
