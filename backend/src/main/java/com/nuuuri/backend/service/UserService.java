@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -19,11 +21,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUser(String userId) {
         return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("해당 유저가 존재하지 않습니다."));
     }
 
     @Transactional
-    public void updateUser() {
+    public void updateUser(String userId, String name, String password) {
 
     }
 
